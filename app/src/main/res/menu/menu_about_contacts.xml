@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.github.gerardo5120.tiemporetiro.MainActivity">
+    <item
+        android:id="@+id/action_add_contact"
+        android:icon="@drawable/ic_action_bug"
+        android:title="Report Bug"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_action_build"
+        android:title="Settings"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_language"
+        android:icon="@drawable/ic_action_lang"
+        android:title="Language"
+        app:showAsAction="always" />
+</menu>
