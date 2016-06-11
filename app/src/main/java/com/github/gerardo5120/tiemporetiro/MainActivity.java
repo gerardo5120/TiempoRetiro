@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_about_contacts, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
 
         return true;
     }
@@ -45,12 +45,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                Intent intent = new Intent(this, About.class);
+            case R.id.action_edit_info:
+                Intent intent = new Intent(this, PersonalInfo.class);
 
-                Bundle b = new Bundle();
-
-                intent.putExtra("Message", "Holla");
+                //Bundle b = new Bundle();
+                //intent.putExtra("Message", "Holla");
 
                 startActivity(intent);
 

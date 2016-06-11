@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tiempo Retiro</string>
+    <string name="edit_info">Editar Información</string>
+    <string name="personal_info_title">Editar Información Personal</string>
+    <string name="birth_date">Fecha de Nacimiento</string>
+    <string name="listed_weeks">Semanas Cotizadas</string>
+    <string name="lw_by_hire_date">Por Fecha de Contratación</string>
+    <string name="lw_by_ent_manually">Introducir Manualmente</string>
+    <string name="num_of_weeks">Cantidad de Semanas</string>
+    <string name="years_working">Años Trabajando</string>
+    <string name="accept">Accept</string>
+</resources>
