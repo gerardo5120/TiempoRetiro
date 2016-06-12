@@ -11,10 +11,10 @@ import android.widget.EditText;
 /**
  * Created by cruzgerardoyanezteran on 10/6/16.
  */
-public class ListedWeeks extends DialogFragment {
+public class ListedWeeksFragment extends DialogFragment {
     private EditText etListedWeeks;
 
-    public ListedWeeks() {
+    public ListedWeeksFragment() {
         // NOPE
     }
 

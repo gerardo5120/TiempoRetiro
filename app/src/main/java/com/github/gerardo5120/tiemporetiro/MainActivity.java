@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.action_edit_info:
-                Intent intent = new Intent(this, PersonalInfo.class);
+                Intent intent = new Intent(this, PersonalInfoActivity.class);
 
                 //Bundle b = new Bundle();
                 //intent.putExtra("Message", "Holla");
