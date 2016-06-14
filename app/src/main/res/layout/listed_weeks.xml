@@ -17,13 +17,13 @@
             android:id="@+id/rbByHireDate"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            />
+            android:checked="true" />
         <RadioButton
             android:layout_width="wrap_content"
             android:text="@string/lw_by_ent_manually"
             android:id="@+id/rbEntManually"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"/>
+            android:layout_marginTop="@dimen/activity_vertical_margin" />
     </RadioGroup>
 
     <TextView
@@ -41,7 +41,8 @@
         android:ems="10"
         android:id="@+id/etListedWeeks"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"/>
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:enabled="false"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -58,5 +59,6 @@
         android:ems="10"
         android:id="@+id/etYearsWorking"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"/>
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:enabled="false"/>
 </LinearLayout>

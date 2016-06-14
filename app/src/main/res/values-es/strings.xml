@@ -11,4 +11,6 @@
     <string name="years_working">Años Trabajando</string>
     <string name="accept">Accept</string>
     <string name="hire_date">Fecha de Contratación</string>
+    <string name="no_date_spec">(Sin fecha especificada)</string>
+    <string name="calculate_weeks">Calcular semanas..</string>
 </resources>
