@@ -1,11 +1,12 @@
 package com.github.gerardo5120.tiemporetiro;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
  * Created by cruzgerardoyanezteran on 12/6/16.
  */
-public class PersonalInfo  {
+public class PersonalInfo implements Serializable {
 
     public enum ListedWeeksBy {
         MANUALLY
@@ -17,6 +18,7 @@ public class PersonalInfo  {
     private Calendar hireDate;
     private ListedWeeksBy listedWeeksBy = ListedWeeksBy.HIRE_DATE;
 
+    private static final float WEEKS_IN_YEAR = 52.1429f;
 
 
     public PersonalInfo() {
@@ -67,20 +69,30 @@ public class PersonalInfo  {
     public void setHireDate(Calendar hireDate) {
         this.hireDate = hireDate;
 
-        if (listedWeeksBy == listedWeeksBy.HIRE_DATE)
-            listedWeeks = getWeeksBetween(hireDate, Calendar.getInstance());
+        resetListedWeeks();
     }
 
     public void setListedWeeksBy(ListedWeeksBy listedWeeksBy) {
         this.listedWeeksBy = listedWeeksBy;
+
+        resetListedWeeks();
     }
 
     public static float getYears(int weeks) {
-        return ((float) weeks) / 52.1429f;
+        return ((float) weeks) / WEEKS_IN_YEAR;
     }
 
-    public float getYears() {
-        return ((float) listedWeeks) / 52.1429f;
+    public static int getWeeks(float years) {
+        return ((int) (years * WEEKS_IN_YEAR));
+    }
+
+    private void resetListedWeeks() {
+        if (this.listedWeeksBy == listedWeeksBy.HIRE_DATE) {
+            if (hireDate != null)
+                listedWeeks = getWeeksBetween(hireDate, Calendar.getInstance());
+            else
+                listedWeeks = 0;
+        }
     }
 
     private static int getWeeksBetween(Calendar startDate, Calendar endDate) {
@@ -90,5 +102,10 @@ public class PersonalInfo  {
         long diff = Math.abs(startMilis - endMilis);
 
         return (int) (diff / (7 * 24 * 60 * 60 * 1000));
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(listedWeeks);
     }
 }

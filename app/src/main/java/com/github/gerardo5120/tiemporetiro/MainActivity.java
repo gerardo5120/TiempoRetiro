@@ -51,11 +51,26 @@ public class MainActivity extends AppCompatActivity {
                 //Bundle b = new Bundle();
                 //intent.putExtra("Message", "Holla");
 
-                startActivity(intent);
+                //startActivity(intent);
+                startActivityForResult(intent, 1);
 
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                PersonalInfo pi = (PersonalInfo) data.getSerializableExtra("personalInfo");
+
+                System.out.println("Personal Info: " +
+                    pi.toString());
+            }
+        }
     }
 }

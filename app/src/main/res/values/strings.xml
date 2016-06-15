@@ -8,11 +8,16 @@
     <string name="lw_by_ent_manually">Entered Manually</string>
     <string name="num_of_weeks">Number Of Weeks</string>
     <string name="years_working">Years Working</string>
-    <string name="accept">Accept</string>
     <string name="title_activity_settings">Settings</string>
     <string name="hire_date">Hire Date</string>
     <string name="no_date_spec">(No date specified)</string>
     <string name="calculate_weeks">Calculate weeks..</string>
+    <string name="enter_hire_date">(Enter Hire Date)</string>
+    <string name="based_on_hire_date">By Hire Date</string>
+    <string name="accept">Accept</string>
+    <string name="ok">Ok</string>
+    <string name="error_no_listed_weeks">Please specify the number of weeks</string>
+    <string name="attention">Attention</string>
 
     <!-- Strings related to Settings -->
 

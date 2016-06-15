@@ -9,8 +9,13 @@
     <string name="lw_by_ent_manually">Introducir Manualmente</string>
     <string name="num_of_weeks">Cantidad de Semanas</string>
     <string name="years_working">Años Trabajando</string>
-    <string name="accept">Accept</string>
     <string name="hire_date">Fecha de Contratación</string>
     <string name="no_date_spec">(Sin fecha especificada)</string>
     <string name="calculate_weeks">Calcular semanas..</string>
+    <string name="enter_hire_date">(Introduzca Fecha de Contratación)</string>
+    <string name="based_on_hire_date">Por Fecha de Contratación</string>
+    <string name="accept">Aceptar</string>
+    <string name="ok">Ok</string>
+    <string name="error_no_listed_weeks">Por favor especifique la cantidad de semanas</string>
+    <string name="attention">Atención</string>
 </resources>

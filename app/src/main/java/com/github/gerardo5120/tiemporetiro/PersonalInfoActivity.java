@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,12 +16,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -27,12 +30,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PersonalInfoActivity extends AppCompatActivity {
-    private EditText etDate;
     private PersonalInfo personalInfo;
-
-    private TextView tvDatePickerReceiver;
-
     private enum ListItems { BIRTH_DATE, LISTED_WEEKS, HIRE_DATE };
+    private ListView listItems;
 
 
     @Override
@@ -60,25 +60,49 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
 
 
-        ListView l = (ListView) findViewById(R.id.listView);
+        listItems = (ListView) findViewById(R.id.listView);
 
+        setAdapter();
+
+        listItems.setOnItemClickListener(itemClickListener);
+    }
+
+    @Override
+    public void onBackPressed() {
+        System.out.println("onBackPressed");
+
+        Intent intent = new Intent(this, PersonalInfoActivity.class);
+        intent.putExtra("personalInfo", personalInfo);
+        setResult(RESULT_OK, intent);
+
+        finish();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        System.out.println("onSupportNavigateUp");
+
+        Intent intent = new Intent(this, PersonalInfoActivity.class);
+        intent.putExtra("personalInfo", personalInfo);
+
+        System.out.println("RESULT: " + RESULT_OK);
+
+        setResult(RESULT_OK, intent);
+
+        finish();
+
+        return true;
+    }
+
+    private void setAdapter() {
         ArrayList<Map<String, String>> list = buildData();
         String[] from = { "name", "purpose" };
         int[] to = { R.id.name, R.id.value };
 
         SimpleAdapter adapter = new SimpleAdapter(this, list,
                 R.layout.personal_info_item, from, to);
-        l.setAdapter(adapter);
 
-        l.setOnItemClickListener(itemClickListener);
-    }
-
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-
-        return true;
+        listItems.setAdapter(adapter);
     }
 
     private ArrayList<Map<String, String>> buildData() {
@@ -87,15 +111,38 @@ public class PersonalInfoActivity extends AppCompatActivity {
         DateFormat dateFormat = android.text.format.DateFormat.
                 getDateFormat(PersonalInfoActivity.this);
 
-
-
         list.add(putData(getString(R.string.birth_date),
                 dateFormat.format(personalInfo.getBirthDate().getTime())));
+
+
+
+
+
+
+        String sListedWeeks;
+
+        if (personalInfo.getListedWeeksBy() == PersonalInfo.ListedWeeksBy.HIRE_DATE)
+        {
+            if (personalInfo.getHireDate() == null)
+                sListedWeeks = getString(R.string.enter_hire_date);
+            else
+                sListedWeeks = String.valueOf(personalInfo.getListedWeeks()) +
+                        " - " + getString(R.string.based_on_hire_date);
+        }
+        else
+            sListedWeeks = String.valueOf(personalInfo.getListedWeeks());
+
+
         list.add(putData(getString(R.string.listed_weeks),
-                String.valueOf(personalInfo.getListedWeeks())));
+                sListedWeeks));
+
+
+
+
+
+
 
         String valHireDate;
-
 
         if (personalInfo.getHireDate() != null)
             valHireDate = dateFormat.format(personalInfo.getHireDate().getTime());
@@ -128,14 +175,12 @@ public class PersonalInfoActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if (ListItems.values()[position] == ListItems.BIRTH_DATE) {
-                tvDatePickerReceiver = (TextView) view.findViewById(R.id.value);
                 PersonalInfoActivity.this.showDatePicker(ListItems.BIRTH_DATE.toString());
             }
             else if (ListItems.values()[position] == ListItems.LISTED_WEEKS) {
                 PersonalInfoActivity.this.showListedWeeks();
             }
             else if (ListItems.values()[position] == ListItems.HIRE_DATE) {
-                tvDatePickerReceiver = (TextView) view.findViewById(R.id.value);
                 PersonalInfoActivity.this.showDatePicker(ListItems.HIRE_DATE.toString());
             }
         }
@@ -143,7 +188,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     private void showListedWeeks() {
         ListedWeeksFragment listedWeeks = new ListedWeeksFragment();
-
         listedWeeks.show(getFragmentManager().beginTransaction(), "listed_weeks");
     }
 
@@ -182,9 +226,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            DateFormat dateFormat = android.text.format.DateFormat.
-                    getDateFormat(mActivity);
-
             final Calendar c = Calendar.getInstance();
             c.set(year, monthOfYear, dayOfMonth);
 
@@ -194,13 +235,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
             else if (ListItems.valueOf(getTag()) == ListItems.HIRE_DATE)
                 mActivity.personalInfo.setHireDate(c);
 
-
-
-
-            if (mActivity.tvDatePickerReceiver == null)
-                return;
-
-            mActivity.tvDatePickerReceiver.setText(dateFormat.format(c.getTime()));
+            mActivity.setAdapter();
         }
     }
 
@@ -226,21 +261,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
             super.onAttach(activity);
         }
 
-        @Override
-        public void onDetach() {
-
-            if (rbByHireDate.isChecked() == true) {
-                
-            }
-
-
-            super.onDetach();
-        }
-
-        public ListedWeeksFragment() {
-            // NOPE
-        }
-
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -248,12 +268,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
             View view = inflater.inflate(R.layout.listed_weeks, container);
             getDialog().setTitle(getString(R.string.calculate_weeks));
 
-            etListedWeeks = (EditText) view.findViewById(R.id.etListedWeeks);
-            etYearsWorking = (EditText) view.findViewById(R.id.etYearsWorking);
+
             rbByHireDate = (RadioButton) view.findViewById(R.id.rbByHireDate);
-            rbEntManually = (RadioButton) view.findViewById(R.id.rbEntManually);
-
-
             rbByHireDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -261,6 +277,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 }
             });
 
+
+            rbEntManually = (RadioButton) view.findViewById(R.id.rbEntManually);
             rbEntManually.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -269,6 +287,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
             });
 
 
+            etListedWeeks = (EditText) view.findViewById(R.id.etListedWeeks);
             etListedWeeks.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -277,6 +296,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (!etListedWeeks.hasFocus())
+                        return;
+
                     int listedWeeks = 0;
 
                     if (s.length() > 0)
@@ -293,6 +315,70 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 }
             });
 
+            etYearsWorking = (EditText) view.findViewById(R.id.etYearsWorking);
+            etYearsWorking.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    // NOPE
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (!etYearsWorking.hasFocus())
+                        return;
+
+                    float yearsWorking = 0;
+
+                    if (s.length() > 0)
+                        yearsWorking = Float.valueOf(s.toString());
+
+                    int listedWeeks = PersonalInfo.getWeeks(yearsWorking);
+
+                    etListedWeeks.setText(String.valueOf(listedWeeks));
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    // NOPE
+                }
+            });
+
+
+            Button btnAccept = (Button) view.findViewById(R.id.btnAccept);
+            btnAccept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (rbByHireDate.isChecked() == true) {
+                        mActivity.personalInfo.setListedWeeksBy(PersonalInfo.ListedWeeksBy.HIRE_DATE);
+                    }
+                    else if (rbEntManually.isChecked() == true) {
+                        mActivity.personalInfo.setListedWeeksBy(PersonalInfo.ListedWeeksBy.MANUALLY);
+
+                        int listedWeeks = 0;
+
+                        if (etListedWeeks.getText().length() > 0)
+                            listedWeeks = Integer.valueOf(etListedWeeks.getText().toString());
+
+
+                        if (listedWeeks == 0) {
+                            showErrorValDialog(getString(R.string.error_no_listed_weeks));
+                            return;
+                        }
+
+                        mActivity.personalInfo.setListedWeeks(listedWeeks);
+                    }
+
+                    mActivity.setAdapter();
+
+                    _dismiss();
+                }
+            });
+
+
+
+
+
 
 
             if (mActivity.personalInfo.getListedWeeksBy() ==
@@ -308,11 +394,16 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 enableControls(false);
             }
 
+
+
             return view;
         }
 
-        //onSupportNavigateUp
 
+
+        private void _dismiss() {
+            dismiss();
+        }
 
         private void enableControls(boolean byHireDate) {
             if (byHireDate) {
@@ -326,5 +417,27 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 etListedWeeks.requestFocus();
             }
         }
+
+
+
+        private void showErrorValDialog(String message) {
+
+            DialogInterface.OnClickListener onClickListener = new DialogInterface.
+                    OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            };
+
+            new AlertDialog.Builder(mActivity)
+                    .setTitle(getString(R.string.attention))
+                    .setMessage(message)
+                    .setPositiveButton(getString(R.string.ok), onClickListener)
+                    .setIcon(R.drawable.ic_action_bug)
+                    .show()
+            ;
+        }
+
     }
 }
