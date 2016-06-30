@@ -434,7 +434,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                     .setTitle(getString(R.string.attention))
                     .setMessage(message)
                     .setPositiveButton(getString(R.string.ok), onClickListener)
-                    .setIcon(R.drawable.ic_action_bug)
+                    .setIcon(R.drawable.ic_action_error)
                     .show()
             ;
         }

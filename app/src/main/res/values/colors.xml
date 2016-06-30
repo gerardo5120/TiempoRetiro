@@ -3,4 +3,16 @@
     <color name="colorPrimary">#FF6D00</color>
     <color name="colorPrimaryDark">#E65100</color>
     <color name="colorAccent">#FFA726</color>
+
+    <color name="colorFabMenuNormal">#E8F5E9</color>
+    <color name="colorFabMenuPressed">#C8E6C9</color>
+    <color name="colorFabMenuRipple">#A5D6A7</color>
+
+    <color name="colorFabNextLayerNormal">#4CAF50</color>
+    <color name="colorFabNextLayerPressed">#1B5E20</color>
+    <color name="colorFabNextLayerRipple">#A5D6A7</color>
+
+    <color name="colorFabOptionMenuNormal">#4CAF50</color>
+    <color name="colorFabOptionMenuPressed">#1B5E20</color>
+    <color name="colorFabOptionMenuRipple">#A5D6A7</color>
 </resources>

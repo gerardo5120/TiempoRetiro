@@ -39,10 +39,10 @@ public class OnDrawExtDerechosHandler extends OnDrawChartSimpleHandler {
     public boolean onDrawValueDial(OnDrawChartParams params) {
         OnDrawValueDialParams dialParams = (OnDrawValueDialParams) params;
 
-        if (dialParams.getValue() == 47)
-            dialParams.setText("Tienes " + String.valueOf(dialParams.getValue()) + " años de edad.");
-        else if (dialParams.getValue() == 13)
-            dialParams.setText("Faltan " + String.valueOf(12) + " años p/retiro");
+        if (dialParams.getValue() == 47f)
+            dialParams.setText("Tienes " + String.valueOf((int) dialParams.getValue()) + " años de edad");
+        else if (dialParams.getValue() == 9.25f)
+            dialParams.setText(String.valueOf(9) + " años p/retiro (ED)");
 
         return super.onDrawValueDial(params);
     }
@@ -52,7 +52,8 @@ public class OnDrawExtDerechosHandler extends OnDrawChartSimpleHandler {
         OnDrawSliceParams sliceParams = (OnDrawSliceParams) params;
 
         if (sliceParams.getValue() == 32) {
-            sliceParams.setText("A los 32 años empezaste");
+            //sliceParams.setText("A los 32 años empezaste");
+            return false;
         }
         else if (sliceParams.getValue() == 15) {
             sliceParams.setText("772 sem's cot's (15 años)");
