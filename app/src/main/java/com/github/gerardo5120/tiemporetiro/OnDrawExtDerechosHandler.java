@@ -1,7 +1,12 @@
 package com.github.gerardo5120.tiemporetiro;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import com.github.gerardo5120.zpiechart.OnDrawChartParams;
 import com.github.gerardo5120.zpiechart.OnDrawChartSimpleHandler;
+import com.github.gerardo5120.zpiechart.OnDrawMarkValueParams;
 import com.github.gerardo5120.zpiechart.OnDrawSliceParams;
 import com.github.gerardo5120.zpiechart.OnDrawValueDialParams;
 
@@ -70,5 +75,21 @@ public class OnDrawExtDerechosHandler extends OnDrawChartSimpleHandler {
 
 
         return super.onDrawSlice(params);
+    }
+
+    @Override
+    public boolean onDrawMarkValue(OnDrawChartParams params) {
+        OnDrawMarkValueParams markValueParams =  (OnDrawMarkValueParams) params;
+
+
+        if (markValueParams.getMarkValue() == 60) {
+            // markValueParams.getCanvas().drawPicture();
+
+            // Resources res = markValueParams.getCanvas()
+
+            // Bitmap bitmap = BitmapFactory.decodeResource()
+        }
+
+        return true;
     }
 }
