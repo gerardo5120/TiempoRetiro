@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         pieChart.setValues(new float[] { 32f, 15f, 9.25f, 3.75f });
 
+        pieChart.setResources(getResources());
 
         ValueDial ageDial = new ValueDial(47f, 0f);
 
@@ -70,15 +71,21 @@ public class MainActivity extends AppCompatActivity {
         timeDial.getGrads().add(years);
 
 
-        SingleMark currentAge = new SingleMark(47f);
+        SingleMark currentAge = new SingleMark(15f);
+        currentAge.setIcon(R.drawable.ic_action_beach_access);
         timeDial.getSingleMarks().add(currentAge);
 
         SingleMark sixtyYearsOld = new SingleMark(60f);
+        sixtyYearsOld.setIcon(R.drawable.ic_action_beach_access);
         timeDial.getSingleMarks().add(sixtyYearsOld);
 
         SingleMark ageStartedWorking = new SingleMark(32f);
+        ageStartedWorking.setIcon(R.drawable.ic_action_work);
         timeDial.getSingleMarks().add(ageStartedWorking);
 
+        SingleMark testMark = new SingleMark(45f);
+        testMark.setIcon(R.drawable.ic_action_work);
+        timeDial.getSingleMarks().add(testMark);
 
         pieChart.getGradedDials().add(timeDial);
 
@@ -340,8 +347,6 @@ public class MainActivity extends AppCompatActivity {
 
 
             if (markValueParams.getMarkValue() == 60) {
-
-
                 Resources res = getResources();
                 Bitmap bitmap = BitmapFactory.decodeResource(res, R.drawable.elderly);
 
